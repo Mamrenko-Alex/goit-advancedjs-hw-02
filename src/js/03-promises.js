@@ -21,11 +21,13 @@ const elements = {
   delay: formData.elements.delay,
   step: formData.elements.step,
   amount: formData.elements.amount,
+  bottonSubmit: formData.elements['js-submit'],
 }
 
 formData.addEventListener('submit', submitHandler);
 
 function submitHandler(event) {
+  elements.bottonSubmit.disabled = true
   event.preventDefault();
 
   const request = {
@@ -44,9 +46,14 @@ function submitHandler(event) {
       })
       .catch(({ position, delay }) => {
         iziToast.error({
-            error: 'Error',
-            message: `❌ Rejected promise ${position} in ${delay}ms`,
+          error: 'Error',
+          title: `Error`,
+          message: `❌ Rejected promise ${position} in ${delay}ms`,
         })
-      });;
+      })
   };
+
+  setTimeout(() => {
+    elements.bottonSubmit.disabled = false
+  }, Number(request.delay) + Number(request.step) * Number(request.amount));
 };

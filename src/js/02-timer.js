@@ -68,6 +68,8 @@ function startTimerHandler() {
     let timeDifferent = selectedDate.getTime() - new Date().getTime();
     
     function updateTimer() {
+        elements.buttonStart.disabled = true;
+        elements.inputDate.disabled = true;
         const currentTime = convertMs(timeDifferent);
 
         elements.timerDay.textContent = addLeadingZero(currentTime.days);
@@ -76,6 +78,7 @@ function startTimerHandler() {
         elements.timerSecond.textContent = addLeadingZero(currentTime.seconds);
 
         if (timeDifferent < 0) {
+            elements.inputDate.disabled = false;
             elements.timerDay.textContent = '00';
             elements.timerHours.textContent = '00';
             elements.timerMinutes.textContent = '00';
